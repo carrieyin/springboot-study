@@ -46,6 +46,15 @@ public class IndexController {
             }
         }
     }
+
+    private void modUserById(Integer id, User user){
+        for(User userinfo : userList){
+            if(id == userinfo.getId()){
+                userinfo.setName(user.getName());
+                userinfo.setAddr(user.getAddr());
+            }
+        }
+    }
     @RequestMapping(value = "/add")
     public ResponVo add(@RequestBody User user){
         user.setId(id++);
@@ -62,6 +71,12 @@ public class IndexController {
         log.info("user:{}",userList) ;
         return ResponVo.success(true);
     }
+    @RequestMapping(value = "/mod")
+    public ResponVo mod(@RequestBody User user){
+        modUserById(user.getId(), user);
+        return ResponVo.success(true);
+    }
+
     @RequestMapping(value = "/select")
     public ResponVo select(@RequestBody User user){
         log.info("user:{}", user);

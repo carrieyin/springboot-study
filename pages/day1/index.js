@@ -1,8 +1,14 @@
 $(function () {
     var userUserCrud = new UserCRUD() ;
     $("#add").click(function () {
+        var id = $("#uid").val();
+        console.log("----------", id);
+        if(undefined == id || "" == id){
+            userUserCrud.addUser("/apis/UserController/add") ;
+        }else{
+            userUserCrud.modUser("/apis/UserController/mod");
+        }
 
-        userUserCrud.addUser("/apis/UserController/add") ;
     });
     $("#select").click(function(){
         userUserCrud.addUser("/apis/UserController/select")
@@ -34,7 +40,7 @@ UserCRUD.prototype.clearTable = function (tableBody) {
 }
 
 UserCRUD.prototype.getParam = function () {
-    var id = #("#uid").val();
+    var id = $("#uid").val();
     var name = $("#name").val() ;
     var addr = $("#addr").val();
     var param = {id:id, name:name, addr:addr} ;
@@ -58,6 +64,30 @@ UserCRUD.prototype.addUser = function (url) {
     var ajaxing = httpUtil.dealAjaxRequest4JSObj(url, param);
     $.when(ajaxing).done(function (resp) {
         _slef.appendTable(tableBody, resp);
+    });
+}
+
+UserCRUD.prototype.modUser = function (url) {
+    var trs = $("#usertable tbody tr");
+    var id = $("#uid")
+    var param = this.getParam();
+    var tr;
+    for (var i = 0; i < trs.length; i++) {
+        var trindex = $(trs[i]);
+        if(trindex.attr("data-id") == id.val()){
+            tr = $(trs[i]);
+
+        }
+    }
+
+    var ajaxing = httpUtil.dealAjaxRequest4JSObj(url, param);
+    $.when(ajaxing).done(function (resp) {
+        if(resp.data){
+            tr.find("td[name='name']").text(param.name);
+            tr.find("td[name='addr']").text(param.addr);
+        }
+
+        $("uid").val("");
     });
 }
 
