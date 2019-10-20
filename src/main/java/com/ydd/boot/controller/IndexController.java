@@ -38,37 +38,34 @@ public class IndexController {
         }
         return listUser;
     }
-    private List findUser(User user){
-        List listUser = new ArrayList<User>();
-        for(User userinfo: userList){
-            if((user.getName().equals(userinfo.getName())) && (user.getAddr().equals(userinfo.getAddr()))){
-                listUser.add(userinfo);
+    private void deleteUserById(Integer id){
+        for (int i = 0; i < userList.size(); i++) {
+            User userinfo = userList.get(i);
+            if(id == userinfo.getId()){
+                userList.remove(i);
             }
         }
-        log.info("select---:{}", listUser);
-        return listUser;
     }
-
     @RequestMapping(value = "/add")
     public ResponVo add(@RequestBody User user){
         user.setId(id++);
         userList.add(user);
         log.info("user:{}",userList) ;
-        return ResponVo.success(userList);
+        ResponVo vo = new ResponVo() ;
+        vo.setFlag(true);
+        vo.setData(userList);
+        return vo ;
     }
-
-    @RequestMapping(value = "/delete")
-    public ResponVo delete(@RequestBody User user){
-        userList.add(user);
+    @RequestMapping(value = "/del")
+    public ResponVo delete(@RequestParam Integer id){
+        deleteUserById(id);
         log.info("user:{}",userList) ;
-        return ResponVo.success(userList);
+        return ResponVo.success(true);
     }
-
     @RequestMapping(value = "/select")
     public ResponVo select(@RequestBody User user){
         log.info("user:{}", user);
-        List<User> list;
-        list = filterUserByName(userList, user.getName());
+        List<User> list = filterUserByName(userList, user.getName());
         list = filterUserByAddr(list, user.getAddr());
         log.info("userList:{}", list);
         return ResponVo.success(list);
