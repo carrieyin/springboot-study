@@ -2,7 +2,9 @@ package com.ydd.boot.controller;
 
 import com.ydd.boot.common.ResponVo;
 import com.ydd.boot.model.User;
+import com.ydd.boot.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,6 +14,11 @@ import java.util.List;
 @RequestMapping("/apis/UserController")
 @Slf4j
 public class IndexController {
+
+    @Autowired
+    private UserService userService ;
+
+
     private List<User> userList = new ArrayList<>();
     private Integer id = 0;
     private List<User> filterUserByName(List<User> userList, String name){
