@@ -8,17 +8,8 @@ public class User{
     private Integer id;
     private String name ;
     private String addr ;
+    private String birthday;
+    private String sex;
+    private String hobby;
 
-
-
-//    public static void main(String[] args) {
-//        String name  ="package com.ydd.boot.model.User" ;
-//        try {
-//            User u = null ;
-//            Class<?> aClass = Class.forName(name);
-//            u = aClass.newInstance() ;
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

@@ -15,10 +15,11 @@ $(function () {
     });
     console.info('------------------',$("#del"))
     $("#usertable tbody").on("click",".del",function () {
-        var tr =  $(this).parents("tr") ;
+        var tr = $(this).parents("tr");
         var userid = tr.attr("data-id");
         console.info(userid)
         userUserCrud.delUser("/apis/UserController/del", userid, tr);
+
     });
 
     $("#usertable tbody").on("click",".mod",function () {
@@ -43,7 +44,15 @@ UserCRUD.prototype.getParam = function () {
     var id = $("#uid").val();
     var name = $("#name").val() ;
     var addr = $("#addr").val();
-    var param = {id:id, name:name, addr:addr} ;
+    var birthday = $("#birthday").val();
+    var sex = $("input[name='sex']:checked").val();
+    var hobbys = $("input[name='hob']:checked");
+    var hob= "";
+    for (var index = 0; index < hobbys.length; index++) {
+        hob +="/" + $(hobbys[index]).val();
+    }
+    console.log(hob);
+    var param = {id:id, name:name, addr:addr, birthday:birthday, sex:sex, hobby:hob} ;
     return param;
 }
 
@@ -51,7 +60,8 @@ UserCRUD.prototype.appendTable = function (tableBody,resp) {
     for(var item of resp.data){
         console.info('----- > ',item)
         var tr = $("<tr data-id='"+ item.id +"'><td name='name'><input type='hidden' value='"+item.id+"' name='id' /> "+ item.name
-            +" </td><td name='addr'>"+ item.addr +"</td><td><a href='#' class='del' data-id ='"+item.id+"' >删除</a>&nbsp;&nbsp;&nbsp;<a  href='#' class='mod'>修改</a></td></tr>") ;
+            +" </td><td name='addr'>"+ item.addr +"</td><td>"+item.birthday+"</td><td>"+ item.sex +"</td><td>"+ item.hobby +
+            "</td>"+"<td><a href='#' class='del' data-id ='"+item.id+"' >删除</a>&nbsp;&nbsp;&nbsp;<a  href='#' class='mod'>修改</a></td></tr>") ;
         tableBody.append(tr);
     }
 }

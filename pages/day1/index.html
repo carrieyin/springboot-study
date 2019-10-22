@@ -12,22 +12,19 @@
         <input id="uid" type="hidden">
         姓名:<input type="text" id="name">
         地址:<input type="text" id="addr">
+        生日:<input type="text" id="birthday">
         <br>
-        性别:男<input name="sex" type="radio">
-        女<input name="sex" type="radio">
+        性别:男<input name="sex" type="radio" value="男">
+        女<input name="sex" type="radio" value="女">
         <br>
-        爱好:<br>
-        <select multiple="multiple">
-            <option value="羽毛球">羽毛球</option>
-            <option value="篮球">篮球</option>
-            <option value="跑步">跑步</option>
-        </select>
+        爱好:羽毛球<input name="hob" type="checkbox" value="羽毛球">
+        篮球<input name="hob" type="checkbox" value="篮球">
         <br>
         <input type="button"id="add" value="保存">
         <input type="button"id="select" value="查询">
         <table id="usertable" border="1px">
             <thead>
-                <tr><td >姓名</td><td>地址</td><td >操作</td></tr>
+                <tr><td >姓名</td><td>地址</td><td>生日</td><td>性别</td><td>爱好</td><td >操作</td></tr>
             </thead>
             <tbody></tbody>
         </table>

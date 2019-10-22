@@ -19,10 +19,8 @@ public class UserController {
     @RequestMapping(value = "/add")
     public ResponVo add(@RequestBody User user){
         List<User> userList = userService.addUser(user);
-        ResponVo vo = new ResponVo() ;
-        vo.setFlag(true);
-        vo.setData(userList);
-        return vo ;
+        log.info("userlist:{}", userList);
+        return ResponVo.success(userList) ;
     }
     @RequestMapping(value = "/del")
     public ResponVo delete(@RequestParam Integer id){
