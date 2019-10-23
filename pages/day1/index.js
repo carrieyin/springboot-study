@@ -27,10 +27,12 @@ $(function () {
         var userid = tr.attr("data-id");
         var name = tr.find("td[name='name']").text();
         var addr = tr.find("td[name='addr']").text();
+        var birthday = tr.find("td[name='addr']")
         var id = tr.attr("data-id");
         $("#name").val(name);
         $("#addr").val(addr);
         $("#uid").val(id);
+        $("#birthday").val();
     });
 })
 
@@ -59,9 +61,11 @@ UserCRUD.prototype.getParam = function () {
 UserCRUD.prototype.appendTable = function (tableBody,resp) {
     for(var item of resp.data){
         console.info('----- > ',item)
+        var delspan = "<button type='button' class='btn btn-default del' aria-label='Left Align'><span class='glyphicon glyphicon-trash'></span></button>";
+        var modspan = "<button type='button' class='btn btn-default mod' aria-label='Left Align'><span class='glyphicon glyphicon-cog'></span></button>";
         var tr = $("<tr data-id='"+ item.id +"'><td name='name'><input type='hidden' value='"+item.id+"' name='id' /> "+ item.name
             +" </td><td name='addr'>"+ item.addr +"</td><td>"+item.birthday+"</td><td>"+ item.sex +"</td><td>"+ item.hobby +
-            "</td>"+"<td><a href='#' class='del' data-id ='"+item.id+"' >删除</a>&nbsp;&nbsp;&nbsp;<a  href='#' class='mod'>修改</a></td></tr>") ;
+            "</td>"+"<td>"+ delspan +"&nbsp;&nbsp;&nbsp;"+ modspan +"</td></tr>") ;
         tableBody.append(tr);
     }
 }
