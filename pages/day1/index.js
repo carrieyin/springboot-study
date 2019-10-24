@@ -13,6 +13,12 @@ $(function () {
     $("#select").click(function(){
         userUserCrud.addUser("/apis/UserController/select")
     });
+
+    $("#clear").click(function(){
+        $("#name").val("");
+        $("#addr").val("");
+        $("#uid").val("");
+    });
     console.info('------------------',$("#del"))
     $("#usertable tbody").on("click",".del",function () {
         var tr = $(this).parents("tr");
@@ -24,15 +30,23 @@ $(function () {
 
     $("#usertable tbody").on("click",".mod",function () {
         var tr =  $(this).parents("tr") ;
-        var userid = tr.attr("data-id");
         var name = tr.find("td[name='name']").text();
         var addr = tr.find("td[name='addr']").text();
-        var birthday = tr.find("td[name='addr']")
+        var birthday = tr.find("td[name='birthday']").text();
+        var sex = tr.find("td[name='sex']").text();
         var id = tr.attr("data-id");
         $("#name").val(name);
         $("#addr").val(addr);
         $("#uid").val(id);
-        $("#birthday").val();
+        var sexRadio = $("input[name='sex']");
+        for (var index = 0; index < sexRadio.length; index++) {
+            var item = $(sexRadio[index]);
+            if(item.val() == sex){
+                item.attr("checked", true);
+            }
+        }
+        $("#birthday").val(birthday);
+
     });
 })
 
@@ -64,7 +78,7 @@ UserCRUD.prototype.appendTable = function (tableBody,resp) {
         var delspan = "<button type='button' class='btn btn-default del' aria-label='Left Align'><span class='glyphicon glyphicon-trash'></span></button>";
         var modspan = "<button type='button' class='btn btn-default mod' aria-label='Left Align'><span class='glyphicon glyphicon-cog'></span></button>";
         var tr = $("<tr data-id='"+ item.id +"'><td name='name'><input type='hidden' value='"+item.id+"' name='id' /> "+ item.name
-            +" </td><td name='addr'>"+ item.addr +"</td><td>"+item.birthday+"</td><td>"+ item.sex +"</td><td>"+ item.hobby +
+            +" </td><td name='addr'>"+ item.addr +"</td><td name='birthday'>"+item.birthday+"</td><td name='sex'>"+ item.sex +"</td><td name='hob'>"+ item.hobby +
             "</td>"+"<td>"+ delspan +"&nbsp;&nbsp;&nbsp;"+ modspan +"</td></tr>") ;
         tableBody.append(tr);
     }
@@ -77,6 +91,7 @@ UserCRUD.prototype.addUser = function (url) {
     var _slef = this;
     var ajaxing = httpUtil.dealAjaxRequest4JSObj(url, param);
     $.when(ajaxing).done(function (resp) {
+
         _slef.appendTable(tableBody, resp);
     });
 }
